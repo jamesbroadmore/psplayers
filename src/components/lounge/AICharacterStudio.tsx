@@ -32,9 +32,11 @@ const TABLE_LINES: Record<CharacterId, Record<"win" | "loss", string>> = {
 export function AICharacterStudio({
   moment,
   roundId,
+  onCharacterChange,
 }: {
   moment: "win" | "loss" | null;
   roundId: number;
+  onCharacterChange?: (characterId: CharacterId) => void;
 }) {
   const [characterId, setCharacterId] = useState<CharacterId>("cleo");
   const [image, setImage] = useState<string | null>(null);
@@ -106,6 +108,7 @@ export function AICharacterStudio({
                 disabled={pending}
                 onClick={() => {
                   setCharacterId(option.id);
+                  onCharacterChange?.(option.id);
                   setImage(null);
                   setMessage("");
                 }}
