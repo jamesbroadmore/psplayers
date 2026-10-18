@@ -10,6 +10,25 @@ import { formatChips, useCasino } from "@/lib/lounge/store";
 
 const COMMISSION_COST = 150;
 
+const TABLE_LINES: Record<CharacterId, Record<"win" | "loss", string>> = {
+  cleo: {
+    win: "A lucky hand, darling. Try not to look too pleased.",
+    loss: "That was almost charming. Almost.",
+  },
+  lumen: {
+    win: "The table has a new favorite. Enjoy the view from the top.",
+    loss: "I knew you would blink first.",
+  },
+  noor: {
+    win: "Beautifully played. The room noticed.",
+    loss: "A gracious loss is still a loss.",
+  },
+  vesper: {
+    win: "Well played. I will pretend I am surprised.",
+    loss: "The cards were honest. You were optimistic.",
+  },
+};
+
 export function AICharacterStudio({
   moment,
   roundId,
@@ -105,6 +124,16 @@ export function AICharacterStudio({
             <p className="text-xs font-semibold tracking-brand text-pink">{character.age.toUpperCase()}</p>
             <p className="mt-2 text-sm text-mist">{character.style}</p>
           </div>
+
+          {moment && (
+            <div className="mt-3 flex gap-3 rounded-md border border-pink/40 bg-pink/5 p-3" aria-live="polite">
+              <span className="mt-0.5 size-2 shrink-0 rounded-full bg-pink" aria-hidden="true" />
+              <div>
+                <p className="text-xs font-semibold tracking-brand text-pink">{moment === "win" ? "TABLE REACTION" : "AFTER THE HAND"}</p>
+                <p className="mt-1 text-sm leading-relaxed text-ink">&ldquo;{TABLE_LINES[characterId][moment]}&rdquo;</p>
+              </div>
+            </div>
+          )}
 
           {moment && freeRewardAvailable && (
             <button
