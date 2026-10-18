@@ -5,6 +5,7 @@ import { playClick, playLose, playWin, unlockAudio } from "@/lib/lounge/audio";
 import type { Card, Suit } from "@/lib/lounge/blackjack";
 import { TABLE_BETS, oneDeck, scorePoker, take } from "@/lib/lounge/originals";
 import { formatChips, formatDelta, useCasino } from "@/lib/lounge/store";
+import { getAICharacter, type CharacterId } from "@/lib/lounge/characters";
 
 export function Poker() {
   const balance = useCasino((s) => s.balance);
@@ -16,6 +17,8 @@ export function Poker() {
   const [banner, setBanner] = useState("Jacks or better. Hold what you want, then draw.");
   const [lastMoment, setLastMoment] = useState<"win" | "loss" | null>(null);
   const [roundId, setRoundId] = useState(0);
+  const [hostId, setHostId] = useState<CharacterId>("cleo");
+  const host = getAICharacter(hostId);
 
   function deal() {
     unlockAudio();
@@ -63,6 +66,14 @@ export function Poker() {
         <div className="p-4 sm:p-6">
           <p className="text-xs font-semibold tracking-brand text-pink">JACKS OR BETTER · STRIP POKER</p>
           <h2 className="font-display text-2xl text-gold">Royal Velvet</h2>
+          <div className="mt-3 flex items-center gap-3 rounded-md border border-line bg-midnight/70 p-2.5">
+            <img src={`/art/dealer-${host.id}.jpg`} alt={`${host.name}, your AI table host`} className="size-12 rounded-md object-cover" />
+            <div className="min-w-0">
+              <p className="text-xs font-semibold tracking-brand text-pink">TONIGHT&apos;S HOST</p>
+              <p className="font-display text-lg text-gold">{host.name}</p>
+              <p className="truncate text-xs text-mist">{host.title} · {host.style}</p>
+            </div>
+          </div>
           <p className="mt-1 text-xs text-mist">Play chips only. Adult fictional hosts react in suggestive, fully covered poses.</p>
           <p className="mt-4 min-h-6 text-sm font-semibold text-gold" data-testid="poker-banner" aria-live="polite">
             {banner}
@@ -157,7 +168,11 @@ export function Poker() {
           </ul>
         </div>
       </div>
-      <AICharacterStudio moment={lastMoment} roundId={roundId} />
+      <AICharacterStudio
+        moment={lastMoment}
+        roundId={roundId}
+        onCharacterChange={setHostId}
+      />
     </div>
   );
 }
