@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { authMiddleware } from "@/lib/auth/middleware";
 import { AI_CHARACTERS, type CharacterId, type CharacterMoment } from "@/lib/lounge/characters";
 
 type PoseRequest = { characterId: CharacterId; moment: CharacterMoment };
@@ -49,6 +50,7 @@ function promptFor(characterId: CharacterId, moment: CharacterMoment): string {
 // A small server-side ceiling protects the owner's image-generation quota. All
 // calls remain user initiated; no generation runs on page load or in a loop.
 export const generateCharacterPose = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .validator(validateRequest)
   .handler(async ({ data }): Promise<PoseResult> => {
     const apiKey = process.env.XAI_API_KEY?.trim();
