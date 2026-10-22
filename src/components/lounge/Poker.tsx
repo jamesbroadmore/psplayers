@@ -5,7 +5,7 @@ import { playClick, playLose, playWin, unlockAudio } from "@/lib/lounge/audio";
 import type { Card, Suit } from "@/lib/lounge/blackjack";
 import { TABLE_BETS, oneDeck, scorePoker, take } from "@/lib/lounge/originals";
 import { formatChips, formatDelta, useCasino } from "@/lib/lounge/store";
-import { getAICharacter, type CharacterId } from "@/lib/lounge/characters";
+import { characterPortrait, getAICharacter, type CharacterId } from "@/lib/lounge/characters";
 
 export function Poker() {
   const balance = useCasino((s) => s.balance);
@@ -67,7 +67,7 @@ export function Poker() {
           <p className="text-xs font-semibold tracking-brand text-pink">JACKS OR BETTER · STRIP POKER</p>
           <h2 className="font-display text-2xl text-gold">Royal Velvet</h2>
           <div className="mt-3 flex items-center gap-3 rounded-md border border-line bg-midnight/70 p-2.5">
-            <img src={`/art/dealer-${host.id}.jpg`} alt={`${host.name}, your AI table host`} className="size-12 rounded-md object-cover" />
+            <img src={characterPortrait(host.id)} alt={`${host.name}, your AI table host`} className="size-12 rounded-md object-cover" />
             <div className="min-w-0">
               <p className="text-xs font-semibold tracking-brand text-pink">TONIGHT&apos;S HOST</p>
               <p className="font-display text-lg text-gold">{host.name}</p>
