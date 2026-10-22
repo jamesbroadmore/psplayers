@@ -194,6 +194,11 @@ export function getAICharacter(id: CharacterId): AICharacter {
   return AI_CHARACTERS.find((character) => character.id === id) ?? AI_CHARACTERS[0]!;
 }
 
+export function characterPortrait(characterId: CharacterId): string {
+  const character = getAICharacter(characterId);
+  return `/art/dealer-${character.id}.${character.gender === "woman" ? "jpg" : "png"}`;
+}
+
 export function hostLine(id: CharacterId, moment: "win" | "loss", salt: number): string {
   const lines = getAICharacter(id).lines[moment];
   const index = Math.abs(salt) % lines.length;

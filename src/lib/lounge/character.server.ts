@@ -7,7 +7,7 @@ type PoseResult =
   | { ok: true; image: string }
   | { ok: false; message: string };
 
-const VALID_IDS = new Set<CharacterId>(["cleo", "lumen", "noor", "vesper"]);
+const VALID_IDS = new Set<CharacterId>(AI_CHARACTERS.map((character) => character.id));
 const VALID_MOMENTS = new Set<CharacterMoment>(["win", "loss", "commission"]);
 const WINDOW_MS = 60 * 60 * 1000;
 const MAX_IMAGES_PER_WINDOW = 12;
@@ -34,7 +34,7 @@ function validateRequest(input: unknown): PoseRequest {
 function promptFor(characterId: CharacterId, moment: CharacterMoment): string {
   const character = AI_CHARACTERS.find((item) => item.id === characterId)!;
   const momentPrompt: Record<CharacterMoment, string> = {
-    win: "The player has just won the hand. Show the host celebrating the player's victory with a playful, flirtatious surrender pose: confident eye contact, a knowing smile, one hand resting on the velvet chair, and her tailored jacket worn open over a fully opaque satin camisole and high-waisted trousers. Make it a polished sensual fashion editorial, not a strip scene; she remains completely dressed and covered.",
+    win: "The player has just won the hand. Show the host celebrating the player's victory with a playful, flirtatious surrender pose: confident eye contact, a knowing smile, one hand resting on the velvet chair, and a tailored jacket worn open over a fully opaque satin top and high-waisted trousers. Make it a polished sensual fashion editorial, not a strip scene; the host remains completely dressed and covered.",
     loss: "The player has just lost the hand. Show the host in a confident, teasing winner's pose, giving a knowing smile while keeping her elegant outfit on.",
     commission: "Create a fresh after-hours editorial pose: relaxed confidence, a flirtatious glance, and a luxurious opaque satin look.",
   };

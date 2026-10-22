@@ -5,6 +5,7 @@ import {
   getAICharacter,
   type CharacterId,
   type CharacterMoment,
+  characterPortrait,
 } from "@/lib/lounge/characters";
 import { formatChips, useCasino } from "@/lib/lounge/store";
 
@@ -26,6 +27,14 @@ const TABLE_LINES: Record<CharacterId, Record<"win" | "loss", string>> = {
   vesper: {
     win: "Well played. I will pretend I am surprised.",
     loss: "The cards were honest. You were optimistic.",
+  },
+  rio: {
+    win: "There it is. I told the room you had it. I did not tell them I was hoping.",
+    loss: "Close gets a grin, not the encore. Keep the nerve.",
+  },
+  jax: {
+    win: "Took it clean. I am going to stand a little closer for the next one.",
+    loss: "Not tonight. I am still not walking away.",
   },
 };
 
@@ -114,7 +123,7 @@ export function AICharacterStudio({
                 }}
                 className={`overflow-hidden rounded-md border text-left transition-colors ${characterId === option.id ? "border-gold bg-gold/10" : "border-line bg-graphite hover:border-gold/60"}`}
               >
-                <img src={`/art/dealer-${option.id}.jpg`} alt="" className="h-24 w-full object-cover" />
+                <img src={characterPortrait(option.id)} alt="" className="h-24 w-full object-cover" />
                 <span className="block px-2.5 py-2">
                   <span className="block text-sm font-semibold text-ink">{option.name}</span>
                   <span className="mt-0.5 block text-xs text-mist">{option.title}</span>
@@ -167,7 +176,7 @@ export function AICharacterStudio({
             <img src={image} alt={`${character.name} in an AI-generated table pose`} className="max-h-96 w-full object-contain" />
           ) : (
             <div className="px-6 py-8 text-center">
-              <img src={`/art/dealer-${characterId}.jpg`} alt="" className="mx-auto max-h-56 rounded-md object-cover" />
+              <img src={characterPortrait(characterId)} alt="" className="mx-auto max-h-56 rounded-md object-cover" />
               <p className="mt-3 text-xs text-mist">The reference portrait anchors each new pose to the same character.</p>
             </div>
           )}
