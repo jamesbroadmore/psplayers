@@ -14,7 +14,7 @@ import {
 } from "@/lib/lounge/collection";
 import { TABLE_BETS, scorePoker } from "@/lib/lounge/originals";
 import { formatChips, useCasino } from "@/lib/lounge/store";
-import { playLose, playWin, unlockAudio } from "@/lib/lounge/sound";
+import { playLose, playWin, unlockAudio } from "@/lib/lounge/audio";
 
 type Phase = "ready" | "live" | "done";
 
@@ -251,7 +251,7 @@ export function CollectionTable({ id }: { id: Floor }) {
     const cards = index === 0 ? ride.cards : [...ride.cards, ride.deck[0]!];
     const nextDeck = index === 0 ? ride.deck : ride.deck.slice(1);
     setRide({ cards, deck: nextDeck, live });
-    if (index === 1) finishRide({ cards, deck: nextDeck, live });
+    if (index === 1) finishRide({ cards, live });
   }
 
   function keepRide(index: 0 | 1) {

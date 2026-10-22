@@ -89,7 +89,7 @@ const TABLES: {
   },
 ];
 
-const GAME_LABEL: Record<GameId, string> = {
+const GAME_LABEL: Partial<Record<GameId, string>> = {
   pokies: "Neon 77",
   blackjack: "Velvet Hand",
   roulette: "Midnight Wheel",
@@ -164,7 +164,7 @@ export function Lobby({ onPlay }: { onPlay: (floor: Floor) => void }) {
               {ledger.slice(0, 6).map((row) => (
                 <li key={row.id} className="flex items-baseline justify-between gap-3 px-4 py-3 text-sm">
                   <span className="min-w-0">
-                    <span className="font-semibold text-ink">{GAME_LABEL[row.game]}</span>
+                    <span className="font-semibold text-ink">{GAME_LABEL[row.game] ?? row.game}</span>
                     <span className="mt-0.5 block truncate text-mist">{row.note}</span>
                   </span>
                   <span className={row.delta >= 0 ? "shrink-0 font-semibold text-gold" : "shrink-0 text-mist"}>
